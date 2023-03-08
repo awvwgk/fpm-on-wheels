@@ -22,7 +22,7 @@ jobs:
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
           CIBW_ENVIRONMENT_MACOS: CC=clang CXX=clang FC=gfortran-11
-          CIBW_ENVIRONMENT_WINDOWS: PATH="C:\\msys64\\mingw64\\bin;C:\\msys64\\usr\\bin;$PATH"
+          CIBW_ENVIRONMENT_WINDOWS: PATH="$PATH;C:\\msys64\\mingw64\\bin;C:\\msys64\\usr\\bin"
 
       - uses: actions/upload-artifact@v3
         with:
