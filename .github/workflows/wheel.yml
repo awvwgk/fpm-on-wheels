@@ -4,13 +4,18 @@ on: [push, pull_request]
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.sys.os }}
+    runs-on: ${{ matrix.sys.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019]
-
+        sys:
+          - { os: windows-2019, shell: "msys2 {0}" }
+          - { os: ubuntu-20.04, shell: bash }
+          - { os: macos-11, shell: bash }
+    defaults:
+      run:
+        shell: ${{ matrix.sys.shell }}
     steps:
       - uses: actions/checkout@v3
 
@@ -29,7 +34,8 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
         env:
-          CIBW_ARCHS_MACOS: x86_64 arm64
+          # FIXME: cross compilation does not work on macos
+          # CIBW_ARCHS_MACOS: x86_64 arm64
           CIBW_ENVIRONMENT_MACOS: CC=clang CXX=clang FC=gfortran-11
 
       - uses: actions/upload-artifact@v3
