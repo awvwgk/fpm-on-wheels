@@ -30,7 +30,13 @@ jobs:
           install: >-
             mingw-w64-x86_64-gcc-fortran
 
-      - name: Build wheels
+      - if: runner.os == 'Windows'
+        name: Build Windows wheels
+        run: pipx run cibuildwheel
+        shell: mysys2 {0}
+
+      - if: runner.os != 'Windows'
+        name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
         env:
           # FIXME: cross compilation does not work on macos
