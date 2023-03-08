@@ -7,4 +7,5 @@ setup(
     author="Fortran-lang",
     license="MIT",
     python_requires=">=3.7",
+    cmake_args=["-G", "Ninja"],
 )
