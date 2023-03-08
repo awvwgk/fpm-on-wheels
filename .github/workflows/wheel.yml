@@ -19,8 +19,8 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
-        # TODO: add cross compilation for arm on linux and macos
         env:
+          CIBW_ARCHS_MACOS: x86_64 arm64
           CIBW_ENVIRONMENT_MACOS: CC=clang CXX=clang FC=gfortran-11
 
       - uses: actions/upload-artifact@v3
