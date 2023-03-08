@@ -17,12 +17,20 @@ jobs:
       - name: Install MSVC if under Windows
         uses: ilammy/msvc-dev-cmd@v1
 
+      - if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          path-type: inherit
+          install: >-
+            mingw-w64-x86_64-gcc-fortran
+            mingw-w64-x86_64-ninja
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
           CIBW_ENVIRONMENT_MACOS: CC=clang CXX=clang FC=gfortran-11
-          CIBW_ENVIRONMENT_WINDOWS: PATH="$PATH;C:\\msys64\\mingw64\\bin;C:\\msys64\\usr\\bin"
 
       - uses: actions/upload-artifact@v3
         with:
