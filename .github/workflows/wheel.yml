@@ -29,7 +29,6 @@ jobs:
           path-type: inherit
           install: >-
             mingw-w64-x86_64-gcc-fortran
-            mingw-w64-x86_64-ninja
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.12.0
